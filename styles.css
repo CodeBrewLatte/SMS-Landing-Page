@@ -61,20 +61,60 @@ body {
   font-weight: 700;
   letter-spacing: 0.8px;
   color: #666;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   text-transform: uppercase;
 }
 
-.org-selector-hint {
-  font-size: 13px;
-  color: #777;
-  margin-bottom: 12px;
+.org-dropdown {
+  position: relative;
 }
 
-.org-list {
+.org-dropdown-trigger {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border: 1.5px solid #d0d0d0;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.org-dropdown-trigger:hover {
+  border-color: #aaa;
+}
+
+.org-dropdown.open .org-dropdown-trigger {
+  border-color: #3d7b3d;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.org-chevron {
+  transition: transform 0.2s;
+  color: #888;
+}
+
+.org-dropdown.open .org-chevron {
+  transform: rotate(180deg);
+}
+
+.org-dropdown-panel {
+  display: none;
+  border: 1.5px solid #3d7b3d;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  background: #fff;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.org-dropdown.open .org-dropdown-panel {
+  display: block;
 }
 
 .org-item {
@@ -83,15 +123,18 @@ body {
   gap: 10px;
   cursor: pointer;
   padding: 10px 14px;
-  border: 1.5px solid #e0e0e0;
-  border-radius: 8px;
   font-size: 14px;
   color: #333;
-  transition: border-color 0.15s, background 0.15s;
+  transition: background 0.1s;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.org-item:last-child {
+  border-bottom: none;
 }
 
 .org-item:hover {
-  border-color: #b0b0b0;
+  background: #f8f8f8;
 }
 
 .org-item input[type="checkbox"] {
@@ -414,6 +457,22 @@ h1 {
   color: #c0392b;
   font-size: 13px;
   margin-bottom: 16px;
+}
+
+.modal-change-link {
+  font-size: 13px;
+  color: #888;
+  margin-top: 14px;
+}
+
+.modal-change-link a {
+  color: #2D6B2D;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.modal-change-link a:hover {
+  text-decoration: underline;
 }
 
 .resend-text {

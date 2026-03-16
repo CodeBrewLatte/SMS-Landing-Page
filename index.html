@@ -28,34 +28,41 @@
 
       <!-- Org Selector (Pro only) -->
       <div class="org-selector" id="orgSelector">
-        <label class="org-selector-label">SELECT ORGANIZATIONS</label>
-        <p class="org-selector-hint">Choose which organizations you'd like to receive SMS alerts for.</p>
-        <div class="org-list">
-          <label class="org-item">
-            <input type="checkbox" class="org-checkbox" value="greenfield" checked />
-            <span class="checkmark"></span>
-            <span>Greenfield Mortgage</span>
-          </label>
-          <label class="org-item">
-            <input type="checkbox" class="org-checkbox" value="summit" checked />
-            <span class="checkmark"></span>
-            <span>Summit Home Loans</span>
-          </label>
-          <label class="org-item">
-            <input type="checkbox" class="org-checkbox" value="horizon" checked />
-            <span class="checkmark"></span>
-            <span>Horizon Financial Group</span>
-          </label>
-          <label class="org-item">
-            <input type="checkbox" class="org-checkbox" value="oakwood" checked />
-            <span class="checkmark"></span>
-            <span>Oakwood Lending</span>
-          </label>
-          <label class="org-item">
-            <input type="checkbox" class="org-checkbox" value="pinnacle" checked />
-            <span class="checkmark"></span>
-            <span>Pinnacle Mortgage Co.</span>
-          </label>
+        <label class="org-selector-label">ORGANIZATIONS</label>
+        <div class="org-dropdown" id="orgDropdown">
+          <button type="button" class="org-dropdown-trigger" id="orgTrigger">
+            <span id="orgSummary">All 5 organizations selected</span>
+            <svg class="org-chevron" viewBox="0 0 20 20" width="16" height="16" fill="none">
+              <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="org-dropdown-panel" id="orgPanel">
+            <label class="org-item">
+              <input type="checkbox" class="org-checkbox" value="greenfield" checked />
+              <span class="checkmark"></span>
+              <span>Greenfield Mortgage</span>
+            </label>
+            <label class="org-item">
+              <input type="checkbox" class="org-checkbox" value="summit" checked />
+              <span class="checkmark"></span>
+              <span>Summit Home Loans</span>
+            </label>
+            <label class="org-item">
+              <input type="checkbox" class="org-checkbox" value="horizon" checked />
+              <span class="checkmark"></span>
+              <span>Horizon Financial Group</span>
+            </label>
+            <label class="org-item">
+              <input type="checkbox" class="org-checkbox" value="oakwood" checked />
+              <span class="checkmark"></span>
+              <span>Oakwood Lending</span>
+            </label>
+            <label class="org-item">
+              <input type="checkbox" class="org-checkbox" value="pinnacle" checked />
+              <span class="checkmark"></span>
+              <span>Pinnacle Mortgage Co.</span>
+            </label>
+          </div>
         </div>
       </div>
 
@@ -132,12 +139,13 @@
 
       <!-- Step 1: Confirm number -->
       <div class="modal-step" id="step1">
-        <h2>Verify your phone number</h2>
+        <h2>Is this your number?</h2>
         <p class="modal-subtitle">
-          We'll send a one-time verification code to confirm your number.
+          We'll send a verification code via text to confirm it's you.
         </p>
         <div class="modal-phone-display" id="modalPhoneDisplay"></div>
-        <button class="btn-primary" id="sendCodeBtn">Send Verification Code</button>
+        <button class="btn-primary" id="sendCodeBtn">Yes, Send Me a Code</button>
+        <p class="modal-change-link">Wrong number? <a href="#" id="changeNumberLink">Go back and update it</a></p>
       </div>
 
       <!-- Step 2: Enter code -->

@@ -69,12 +69,47 @@
 
   // ==================== ORG SELECTOR ====================
 
+  const orgDropdown = document.getElementById('orgDropdown');
+  const orgTrigger = document.getElementById('orgTrigger');
+  const orgSummary = document.getElementById('orgSummary');
   const orgCheckboxes = document.querySelectorAll('.org-checkbox');
+
+  // Toggle dropdown
+  orgTrigger.addEventListener('click', () => {
+    orgDropdown.classList.toggle('open');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!orgDropdown.contains(e.target)) {
+      orgDropdown.classList.remove('open');
+    }
+  });
+
+  function updateOrgSummary() {
+    const total = orgCheckboxes.length;
+    const selected = document.querySelectorAll('.org-checkbox:checked');
+    const count = selected.length;
+
+    if (count === 0) {
+      orgSummary.textContent = 'No organizations selected';
+    } else if (count === total) {
+      orgSummary.textContent = `All ${total} organizations selected`;
+    } else if (count <= 2) {
+      const names = Array.from(selected).map(c =>
+        c.closest('.org-item').querySelector('span:last-child').textContent
+      );
+      orgSummary.textContent = names.join(', ');
+    } else {
+      orgSummary.textContent = `${count} of ${total} organizations selected`;
+    }
+  }
 
   orgCheckboxes.forEach(cb => {
     cb.addEventListener('change', () => {
+      updateOrgSummary();
+
       const selected = document.querySelectorAll('.org-checkbox:checked');
-      // Update consent text to list selected orgs
       if (selected.length > 0) {
         const orgNames = Array.from(selected).map(c => {
           return c.closest('.org-item').querySelector('span:last-child').textContent;
@@ -177,6 +212,14 @@
   modalClose.addEventListener('click', closeModal);
   modalOverlay.addEventListener('click', (e) => {
     if (e.target === modalOverlay) closeModal();
+  });
+
+  // "Go back" link in step 1 — close modal and focus phone input
+  document.getElementById('changeNumberLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    closeModal();
+    phoneInput.focus();
+    phoneInput.select();
   });
 
   function closeModal() {
