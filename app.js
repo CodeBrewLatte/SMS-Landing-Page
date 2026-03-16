@@ -34,7 +34,7 @@
     pro: {
       title: 'Sign up for SMS alerts',
       subtitle: 'Get real-time notifications when your clients take action — hub logins, lead form submissions, refinance rate views, and other high-intent activity — delivered straight to your phone.',
-      consent: 'I agree to receive recurring automated SMS alerts from <strong>Greenfield Mortgage</strong> at the phone number provided, including notifications about client activity such as hub logins, lead submissions, and engagement events. Message & data rates may apply. Message frequency varies. Reply STOP to opt out at any time. Reply HELP for help. <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a>',
+      consent: null, // Built dynamically from selected orgs
       success: (num) => `SMS alerts are now active for <strong>${num}</strong>. You'll receive real-time notifications when your clients take action.`
     },
     consumer: {
@@ -45,6 +45,18 @@
     }
   };
 
+  function buildProConsent() {
+    const selected = document.querySelectorAll('.org-checkbox:checked');
+    if (selected.length === 0) return '';
+    const orgNames = Array.from(selected).map(c =>
+      c.closest('.org-item').querySelector('span:last-child').textContent
+    );
+    const orgList = orgNames.length === 1
+      ? `<strong>${orgNames[0]}</strong>`
+      : orgNames.slice(0, -1).map(n => `<strong>${n}</strong>`).join(', ') + ` and <strong>${orgNames[orgNames.length - 1]}</strong>`;
+    return `I agree to receive recurring automated SMS alerts from ${orgList} at the phone number provided, including notifications about client activity such as hub logins, lead submissions, and engagement events. Message & data rates may apply. Message frequency varies. Reply STOP to opt out at any time. Reply HELP for help. <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a>`;
+  }
+
   function switchUserType(type) {
     if (type === currentUserType) return;
     currentUserType = type;
@@ -53,13 +65,13 @@
 
     pageTitle.textContent = content[type].title;
     pageSubtitle.textContent = content[type].subtitle;
-    consentText.innerHTML = content[type].consent;
 
-    // Show/hide org selector (pro only)
     if (type === 'pro') {
       orgSelector.classList.remove('hidden');
+      consentText.innerHTML = buildProConsent();
     } else {
       orgSelector.classList.add('hidden');
+      consentText.innerHTML = content[type].consent;
     }
   }
 
@@ -108,18 +120,7 @@
   orgCheckboxes.forEach(cb => {
     cb.addEventListener('change', () => {
       updateOrgSummary();
-
-      const selected = document.querySelectorAll('.org-checkbox:checked');
-      if (selected.length > 0) {
-        const orgNames = Array.from(selected).map(c => {
-          return c.closest('.org-item').querySelector('span:last-child').textContent;
-        });
-        const orgList = orgNames.length === 1
-          ? `<strong>${orgNames[0]}</strong>`
-          : orgNames.slice(0, -1).map(n => `<strong>${n}</strong>`).join(', ') + ` and <strong>${orgNames[orgNames.length - 1]}</strong>`;
-
-        consentText.innerHTML = `I agree to receive recurring automated SMS alerts from ${orgList} at the phone number provided, including notifications about client activity such as hub logins, lead submissions, and engagement events. Message & data rates may apply. Message frequency varies. Reply STOP to opt out at any time. Reply HELP for help. <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a>`;
-      }
+      consentText.innerHTML = buildProConsent();
       updateVerifyBtn();
     });
   });

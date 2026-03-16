@@ -105,12 +105,18 @@ body {
 
 .org-dropdown-panel {
   display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
   border: 1.5px solid #3d7b3d;
   border-top: none;
   border-radius: 0 0 10px 10px;
   background: #fff;
   max-height: 220px;
   overflow-y: auto;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .org-dropdown.open .org-dropdown-panel {
