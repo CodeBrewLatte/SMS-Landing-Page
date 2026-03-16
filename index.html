@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMS Alerts – Greenfield Mortgage</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="card">
+      <!-- Logo -->
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="8" fill="#2D3B2D"/>
+          <path d="M20 8 L28 28 H12 Z" fill="white" opacity="0.9"/>
+        </svg>
+        <span class="logo-text">Greenfield Mortgage</span>
+      </div>
+
+      <!-- Heading -->
+      <h1>Sign up for SMS alerts</h1>
+      <p class="subtitle">
+        Get real-time notifications when your clients take action — hub logins,
+        lead form submissions, refinance rate views, and other high-intent
+        activity — delivered straight to your phone.
+      </p>
+
+      <!-- Phone on file -->
+      <div class="phone-on-file">
+        <label>YOUR PHONE NUMBER ON FILE</label>
+        <span class="masked-number">(XXX) XXX-9313</span>
+      </div>
+
+      <!-- Input -->
+      <div class="input-group">
+        <input
+          type="tel"
+          id="phoneInput"
+          placeholder="Enter your full phone number"
+          maxlength="14"
+        />
+      </div>
+
+      <!-- Consent -->
+      <div class="consent">
+        <label class="checkbox-label">
+          <input type="checkbox" id="consentCheckbox" />
+          <span class="checkmark"></span>
+          <span class="consent-text">
+            I agree to receive recurring automated SMS alerts from
+            <strong>Greenfield Mortgage</strong> at the phone number provided,
+            including notifications about client activity such as hub logins,
+            lead submissions, and engagement events.
+            Message &amp; data rates may apply. Message frequency varies.
+            Reply STOP to opt out at any time. Reply HELP for help.
+            <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a>
+          </span>
+        </label>
+      </div>
+
+      <!-- CTA Button -->
+      <button class="btn-primary" id="verifyBtn" disabled>Verify &amp; Opt In</button>
+
+      <!-- Footer -->
+      <p class="footer-text">
+        You can unsubscribe at any time by replying STOP.<br>
+        Powered by <a href="#"><strong>Homeowner.ai</strong></a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Verification Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">&times;</button>
+
+      <!-- Step 1: Confirm number -->
+      <div class="modal-step" id="step1">
+        <h2>Verify your phone number</h2>
+        <p class="modal-subtitle">
+          We'll send a one-time verification code to confirm your number.
+        </p>
+        <div class="modal-phone-display" id="modalPhoneDisplay"></div>
+        <button class="btn-primary" id="sendCodeBtn">Send Verification Code</button>
+      </div>
+
+      <!-- Step 2: Enter code -->
+      <div class="modal-step hidden" id="step2">
+        <h2>Enter verification code</h2>
+        <p class="modal-subtitle">
+          A 5-digit code was sent to <strong id="codeSentTo"></strong>.
+          <br>Enter it below to complete opt-in.
+        </p>
+        <div class="code-inputs">
+          <input type="text" maxlength="1" class="code-digit" data-index="0" autofocus />
+          <input type="text" maxlength="1" class="code-digit" data-index="1" />
+          <input type="text" maxlength="1" class="code-digit" data-index="2" />
+          <input type="text" maxlength="1" class="code-digit" data-index="3" />
+          <input type="text" maxlength="1" class="code-digit" data-index="4" />
+        </div>
+        <p class="code-error hidden" id="codeError">Incorrect code. Please try again.</p>
+        <button class="btn-primary" id="verifyCodeBtn" disabled>Verify</button>
+        <p class="resend-text">Didn't receive a code? <a href="#" id="resendLink">Resend</a></p>
+      </div>
+
+      <!-- Step 3: Success -->
+      <div class="modal-step hidden" id="step3">
+        <div class="success-icon">
+          <svg viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="30" fill="#2D6B2D" opacity="0.1"/>
+            <circle cx="32" cy="32" r="24" fill="#2D6B2D" opacity="0.15"/>
+            <path d="M20 32 L28 40 L44 24" stroke="#2D6B2D" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <h2>You're opted in!</h2>
+        <p class="modal-subtitle">
+          SMS alerts are now active for <strong id="optedInNumber"></strong>.
+          You'll receive real-time notifications when your clients take action.
+        </p>
+        <button class="btn-primary" id="doneBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
