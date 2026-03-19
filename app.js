@@ -23,8 +23,12 @@
   const step2 = document.getElementById('step2');
   const step3 = document.getElementById('step3');
   const step4 = document.getElementById('step4');
-  const supportMailto = document.getElementById('supportMailto');
+  const supportSubject = document.getElementById('supportSubject');
+  const supportBody = document.getElementById('supportBody');
+  const sendSupportBtn = document.getElementById('sendSupportBtn');
+  const doneSupportBtn = document.getElementById('doneSupportBtn');
   const tryAgainLink = document.getElementById('tryAgainLink');
+  const step5 = document.getElementById('step5');
 
   const VALID_CODE = '12345';
   const MAX_ATTEMPTS = 1;
@@ -238,6 +242,7 @@
     step2.classList.toggle('hidden', n !== 2);
     step3.classList.toggle('hidden', n !== 3);
     step4.classList.toggle('hidden', n !== 4);
+    step5.classList.toggle('hidden', n !== 5);
 
     if (n === 2) {
       codeDigits.forEach(d => { d.value = ''; });
@@ -247,19 +252,16 @@
     }
 
     if (n === 4) {
-      buildMailtoLink();
+      populateSupportForm();
     }
   }
 
-  function buildMailtoLink() {
+  function populateSupportForm() {
     const phone = phoneInput.value || '(not entered)';
     const name = 'User'; // placeholder for demo
     const email = 'user@example.com'; // placeholder for demo
-    const subject = encodeURIComponent(`Phone verification issue for SMS consent - ${name}`);
-    const body = encodeURIComponent(
-      `Ticket:\n\nI'm trying to verify my phone number for SMS consent, but I wasn't able to complete verification after multiple attempts.\n\nPhone number: ${phone}\nEmail: ${email}\n\nPlease help me complete SMS enrollment.\n\nThank you.`
-    );
-    supportMailto.href = `mailto:support@homeowner.ai?subject=${subject}&body=${body}`;
+    supportSubject.value = `Phone verification issue for SMS consent - ${name}`;
+    supportBody.value = `Ticket:\n\nI'm trying to verify my phone number for SMS consent, but I wasn't able to complete verification after multiple attempts.\n\nPhone number: ${phone}\nEmail: ${email}\n\nPlease help me complete SMS enrollment.\n\nThank you.`;
   }
 
   sendCodeBtn.addEventListener('click', () => {
@@ -342,6 +344,18 @@
       resendLink.textContent = 'Resend';
       resendLink.style.pointerEvents = '';
     }, 2000);
+  });
+
+  sendSupportBtn.addEventListener('click', () => {
+    sendSupportBtn.classList.add('loading');
+    setTimeout(() => {
+      sendSupportBtn.classList.remove('loading');
+      showStep(5);
+    }, 1000);
+  });
+
+  doneSupportBtn.addEventListener('click', () => {
+    closeModal();
   });
 
   tryAgainLink.addEventListener('click', (e) => {

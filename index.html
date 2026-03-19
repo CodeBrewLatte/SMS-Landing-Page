@@ -186,7 +186,7 @@
         <button class="btn-primary" id="doneBtn">Done</button>
       </div>
 
-      <!-- Step 4: Max attempts failed -->
+      <!-- Step 4: Max attempts failed — support form -->
       <div class="modal-step hidden" id="step4">
         <div class="fail-icon">
           <svg viewBox="0 0 64 64" fill="none">
@@ -196,14 +196,44 @@
           </svg>
         </div>
         <h2>Verification failed</h2>
-        <p class="modal-subtitle">
+        <p class="modal-subtitle" style="margin-bottom: 20px;">
           We couldn't verify your phone number after multiple attempts.
-          You can open a ticket below and we'll assist you.
+          Review the details below and hit send — we'll help you get enrolled.
         </p>
-        <a class="btn-primary btn-mailto" id="supportMailto" href="#">Contact Support</a>
-        <p class="modal-change-link" style="margin-top: 16px;">
-          <a href="#" id="tryAgainLink">Try again</a>
+        <div class="support-form">
+          <div class="support-field">
+            <label>To</label>
+            <input type="text" value="support@homeowner.ai" readonly />
+          </div>
+          <div class="support-field">
+            <label>Subject</label>
+            <input type="text" id="supportSubject" readonly />
+          </div>
+          <div class="support-field">
+            <label>Message</label>
+            <textarea id="supportBody" rows="7" readonly></textarea>
+          </div>
+        </div>
+        <button class="btn-primary" id="sendSupportBtn">Send</button>
+        <p class="modal-change-link" style="margin-top: 14px;">
+          <a href="#" id="tryAgainLink">Try again instead</a>
         </p>
+      </div>
+
+      <!-- Step 5: Support ticket sent confirmation -->
+      <div class="modal-step hidden" id="step5">
+        <div class="success-icon">
+          <svg viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="30" fill="#2D6B2D" opacity="0.1"/>
+            <circle cx="32" cy="32" r="24" fill="#2D6B2D" opacity="0.15"/>
+            <path d="M20 32 L28 40 L44 24" stroke="#2D6B2D" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <h2>Ticket sent</h2>
+        <p class="modal-subtitle">
+          Your support request has been submitted. Our team will reach out to help you complete SMS enrollment.
+        </p>
+        <button class="btn-primary" id="doneSupportBtn">Done</button>
       </div>
     </div>
   </div>
