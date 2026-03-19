@@ -22,8 +22,13 @@
   const step1 = document.getElementById('step1');
   const step2 = document.getElementById('step2');
   const step3 = document.getElementById('step3');
+  const step4 = document.getElementById('step4');
+  const supportMailto = document.getElementById('supportMailto');
+  const tryAgainLink = document.getElementById('tryAgainLink');
 
   const VALID_CODE = '12345';
+  const MAX_ATTEMPTS = 1;
+  let failedAttempts = 0;
   const PHONE_ON_FILE = '2123339313'; // (212) 333-9313
 
   let currentUserType = 'pro';
@@ -206,6 +211,7 @@
 
     successMessage.innerHTML = successText;
 
+    failedAttempts = 0;
     showStep(1);
     modalOverlay.classList.add('active');
   });
@@ -231,6 +237,7 @@
     step1.classList.toggle('hidden', n !== 1);
     step2.classList.toggle('hidden', n !== 2);
     step3.classList.toggle('hidden', n !== 3);
+    step4.classList.toggle('hidden', n !== 4);
 
     if (n === 2) {
       codeDigits.forEach(d => { d.value = ''; });
@@ -238,6 +245,21 @@
       verifyCodeBtn.disabled = true;
       setTimeout(() => codeDigits[0].focus(), 100);
     }
+
+    if (n === 4) {
+      buildMailtoLink();
+    }
+  }
+
+  function buildMailtoLink() {
+    const phone = phoneInput.value || '(not entered)';
+    const name = 'User'; // placeholder for demo
+    const email = 'user@example.com'; // placeholder for demo
+    const subject = encodeURIComponent(`Phone verification issue for SMS consent - ${name}`);
+    const body = encodeURIComponent(
+      `Ticket:\n\nI'm trying to verify my phone number for SMS consent, but I wasn't able to complete verification after multiple attempts.\n\nPhone number: ${phone}\nEmail: ${email}\n\nPlease help me complete SMS enrollment.\n\nThank you.`
+    );
+    supportMailto.href = `mailto:support@homeowner.ai?subject=${subject}&body=${body}`;
   }
 
   sendCodeBtn.addEventListener('click', () => {
@@ -288,21 +310,27 @@
     const code = Array.from(codeDigits).map(d => d.value).join('');
 
     if (code === VALID_CODE) {
+      failedAttempts = 0;
       verifyCodeBtn.classList.add('loading');
       setTimeout(() => {
         verifyCodeBtn.classList.remove('loading');
         showStep(3);
       }, 800);
     } else {
-      codeError.classList.remove('hidden');
-      codeDigits.forEach(d => {
-        d.value = '';
-        d.style.borderColor = '#c0392b';
-      });
-      codeDigits[0].focus();
-      setTimeout(() => {
-        codeDigits.forEach(d => { d.style.borderColor = ''; });
-      }, 1500);
+      failedAttempts++;
+      if (failedAttempts >= MAX_ATTEMPTS) {
+        showStep(4);
+      } else {
+        codeError.classList.remove('hidden');
+        codeDigits.forEach(d => {
+          d.value = '';
+          d.style.borderColor = '#c0392b';
+        });
+        codeDigits[0].focus();
+        setTimeout(() => {
+          codeDigits.forEach(d => { d.style.borderColor = ''; });
+        }, 1500);
+      }
     }
   });
 
@@ -314,6 +342,12 @@
       resendLink.textContent = 'Resend';
       resendLink.style.pointerEvents = '';
     }, 2000);
+  });
+
+  tryAgainLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    failedAttempts = 0;
+    showStep(2);
   });
 
   doneBtn.addEventListener('click', () => {

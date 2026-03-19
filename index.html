@@ -185,6 +185,26 @@
         </p>
         <button class="btn-primary" id="doneBtn">Done</button>
       </div>
+
+      <!-- Step 4: Max attempts failed -->
+      <div class="modal-step hidden" id="step4">
+        <div class="fail-icon">
+          <svg viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="30" fill="#c0392b" opacity="0.1"/>
+            <circle cx="32" cy="32" r="24" fill="#c0392b" opacity="0.15"/>
+            <path d="M24 24 L40 40 M40 24 L24 40" stroke="#c0392b" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <h2>Verification failed</h2>
+        <p class="modal-subtitle">
+          We couldn't verify your phone number after multiple attempts.
+          You can open a ticket below and we'll assist you.
+        </p>
+        <a class="btn-primary btn-mailto" id="supportMailto" href="#">Contact Support</a>
+        <p class="modal-change-link" style="margin-top: 16px;">
+          <a href="#" id="tryAgainLink">Try again</a>
+        </p>
+      </div>
     </div>
   </div>
 

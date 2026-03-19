@@ -507,6 +507,23 @@ h1 {
   height: 72px;
 }
 
+/* Fail Icon */
+.fail-icon {
+  margin-bottom: 20px;
+}
+
+.fail-icon svg {
+  width: 72px;
+  height: 72px;
+}
+
+.btn-mailto {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+}
+
 /* Utility */
 .hidden {
   display: none !important;
